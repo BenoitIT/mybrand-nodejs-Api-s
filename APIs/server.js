@@ -6,8 +6,8 @@ const dotenv = require("dotenv");
 
 const { ConnectDb } = require("./connections/mongDBconnect");
 const BlogRouter = require("./Routes/blogs");
-const messageRouter=require("./Routes/messages");
-const userRouter=require("./Routes/users");
+// const messageRouter=require("./Routes/messages");
+// const userRouter=require("./Routes/users");
 const {
   handleBadRequest,
   handleNotefound,
@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 
 app.use(BlogRouter);
-app.use('/messages',messageRouter);
-app.use('/admin',userRouter);
+// app.use('/messages',messageRouter);
+// app.use('/admin',userRouter);
 
 app.use(handleBadRequest);
 app.use(handleNotefound);
