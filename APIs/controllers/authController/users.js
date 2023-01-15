@@ -1,11 +1,11 @@
-const User = require("../../models/users");
-const Bcrypt = require("bcrypt");
-const loadash = require("lodash");
-const JWT = require("jsonwebtoken");
+import  User from "../../models/users";
+import Bcrypt from "bcrypt";
+import loadash from "lodash";
+import  JWT from "jsonwebtoken";
 require("dotenv").config();
-const { asyncWrapper } = require("../../middlewares/asyncWrapper");
+import  { asyncWrapper } from "../../middlewares/asyncWrapper";
 //create user function
-const createUser = asyncWrapper(async (req, res) => {
+export const createUser = asyncWrapper(async (req, res) => {
   const salt = await Bcrypt.genSalt(10);
   const hashedPassword = await Bcrypt.hash(req.body.password, salt);
   const { userName, email } = req.body;
@@ -24,7 +24,7 @@ const createUser = asyncWrapper(async (req, res) => {
   }
 });
 //login function
-const login = asyncWrapper(async (req, res) => {
+export const login = asyncWrapper(async (req, res) => {
   const cookie = req.headers?.cookie;
   if (cookie) {
     let cookieValue=cookie.split(';');
@@ -81,4 +81,3 @@ const login = asyncWrapper(async (req, res) => {
     }
   }
 });
-module.exports = { createUser, login };

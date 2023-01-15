@@ -1,7 +1,7 @@
-const JWT = require("jsonwebtoken");
-const {asyncWrapper}=require('../middlewares/asyncWrapper')
+import JWT from "jsonwebtoken";
+import {asyncWrapper} from '../middlewares/asyncWrapper'
 require("dotenv").config();
-const auth = asyncWrapper(async (req, res, next) => {
+export const auth = asyncWrapper(async (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) {
     res.status(403).json({ message: `access denied for this page`});
@@ -11,4 +11,3 @@ const auth = asyncWrapper(async (req, res, next) => {
   req.authuser = decordedToken;
   next();
 })
-module.exports= {auth}
