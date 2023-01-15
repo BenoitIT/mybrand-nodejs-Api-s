@@ -1,6 +1,6 @@
 const express = require("express");
-//const {auth}= require('../middlewares/auth')
 const { upload } = require("../cloudinary/multer");
+const {auth}= require('../middlewares/auth')
 const Router = express.Router();
 const {
   createBlog,
@@ -10,9 +10,9 @@ const {
   updateBlog,
 } = require("../controllers/blogs");
 //blog routes
-Router.post("/blogs",upload.single('blogImage'),createBlog);
+Router.post("/blogs",auth,upload.single('blogImage'),createBlog);
 Router.get("/blogs", listBlogs);
 Router.get("/blog/:id", findSingleBlog);
-Router.delete("/blog/:id",deleteBlog);
-Router.patch("/blog/:id", updateBlog);
+Router.delete("/blog/:id",auth,deleteBlog);
+Router.patch("/blog/:id", auth,updateBlog);
 module.exports = Router;
