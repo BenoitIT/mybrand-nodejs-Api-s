@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-require("mongoose-type-url");
+import mongoose from "mongoose";
+import "mongoose-type-url";
 const blogsSchema = mongoose.Schema({
   title: {
     type: String,
@@ -19,4 +19,4 @@ const blogsSchema = mongoose.Schema({
     required: true,
   },
 });
-module.exports = mongoose.model("Blog", blogsSchema);
+export default mongoose.model("Blog", blogsSchema);

@@ -1,18 +1,17 @@
-const express = require("express");
-const { upload } = require("../cloudinary/multer");
-const {auth}= require('../middlewares/auth')
-const Router = express.Router();
-const {
+import express from "express";
+import { upload } from "../cloudinary/multer";
+//const {auth}= require('../middlewares/auth')
+export const BlogRouter = express.Router();
+import {
   createBlog,
   listBlogs,
   findSingleBlog,
   deleteBlog,
   updateBlog,
-} = require("../controllers/blogs");
+} from "../controllers/blogs";
 //blog routes
-Router.post("/blogs",auth,upload.single('blogImage'),createBlog);
-Router.get("/blogs", listBlogs);
-Router.get("/blog/:id", findSingleBlog);
-Router.delete("/blog/:id",auth,deleteBlog);
-Router.patch("/blog/:id", auth,updateBlog);
-module.exports = Router;
+BlogRouter.post("/blogs", upload.single("blogImage"), createBlog);
+BlogRouter.get("/blogs", listBlogs);
+BlogRouter.get("/blog/:id", findSingleBlog);
+BlogRouter.delete("/blog/:id", deleteBlog);
+BlogRouter.patch("/blog/:id", updateBlog);
