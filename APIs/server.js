@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 import { ConnectDb } from "./connections/mongDBconnect";
 import {BlogRouter} from "./Routes/blogs";
-// const messageRouter=require("./Routes/messages");
+import {MessageRouter} from "./Routes/messages";
 // const userRouter=require("./Routes/users");
 import  {
   handleBadRequest,
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 
 app.use(BlogRouter);
-// app.use('/messages',messageRouter);
+app.use('/messages',MessageRouter);
 // app.use('/admin',userRouter);
 
 app.use(handleBadRequest);
