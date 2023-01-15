@@ -1,4 +1,4 @@
-const multer=require("multer")
+import multer from "multer"
 const fileStorage=multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,'/uploads')
@@ -7,5 +7,4 @@ const fileStorage=multer.diskStorage({
         cb(null,Date.now().toString()+file.originalname)
     }
 })
-const upload=multer({storage:fileStorage})
-module.exports={upload}
+export const upload=multer({storage:fileStorage})

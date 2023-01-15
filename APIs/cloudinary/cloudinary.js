@@ -1,5 +1,5 @@
-const cloudinary=require("cloudinary")
-const dotenv=require("dotenv")
+import cloudinary from "cloudinary";
+import dotenv from "dotenv";
 dotenv.config()
 //configuring environment variable at cloudinary
 cloudinary.config({
@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret:process.env.API_SECRET
 })
 //generating upload function to cloudinary
-const uploads=(file,folder)=>{
+export const uploads=(file,folder)=>{
     return new Promise(resolve=>{
         cloudinary.uploader.upload(file,(result)=>{
             resolve({
@@ -22,4 +22,3 @@ const uploads=(file,folder)=>{
         })
     })
 }
-module.exports={uploads}

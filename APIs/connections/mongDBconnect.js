@@ -1,5 +1,4 @@
-const mongoose=require('mongoose')
-const ConnectDb=(url)=>{
+import mongoose from "mongoose"
+export const ConnectDb=(url)=>{
     return mongoose.connect(url)
 }
-module.exports={ConnectDb}
