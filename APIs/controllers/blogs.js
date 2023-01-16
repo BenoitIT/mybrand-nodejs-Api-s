@@ -23,7 +23,7 @@ export const listBlogs = asyncWrapper(async (req, res) => {
 //find single blog
 export const findSingleBlog = asyncWrapper(async (req, res) => {
   const { id } = req.params;
-  const blog = await Blog.findOne({ _id: id }).exec();
+  const blog = await Blog.findOne({ _id: id }).populate("comments","comment").exec();
   res.status(200).json({ data: blog });
 });
 //delete a single blog
