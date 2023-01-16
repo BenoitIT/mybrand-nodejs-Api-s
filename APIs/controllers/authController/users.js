@@ -28,14 +28,14 @@ export const login = asyncWrapper(async (req, res) => {
   const cookie = req.headers?.cookie;
   if (cookie) {
     let cookieValue=cookie.split(';');
-    ActiveRefreshToken=cookieValue[0].substring(13)
+    const ActiveRefreshToken=cookieValue[0].substring(13)
       //res.clearCookie("refreshToken");
     let user = await User.findOne({ refreshToken:ActiveRefreshToken }).exec();
   if(user){
     const accessToken = JWT.sign(
       { _id: user._id, email: user.email },
       process.env.APP_SECRET,
-      { expiresIn: "36s" }
+      { expiresIn: "3600s" }
     );
      //store refresh token in cookies
     res.json({ message: "welcome",accessToken });
@@ -58,7 +58,7 @@ export const login = asyncWrapper(async (req, res) => {
         const accessToken = JWT.sign(
           { _id: user._id, email: user.email },
           process.env.APP_SECRET,
-          { expiresIn: "30s" }
+          { expiresIn: "300s" }
         );
         const refreshToken = JWT.sign(
           { _id: user._id, email: user.email },
