@@ -1,6 +1,6 @@
 import express from "express";
 import { upload } from "../cloudinary/multer";
-import  {auth} from '../middlewares/auth'
+import  {auth} from '../middlewares/auth';
 export const BlogRouter = express.Router();
 import {
   createBlog,
