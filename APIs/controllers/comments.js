@@ -1,7 +1,6 @@
 import Comment from "../models/comments";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import Blog from "../models/blogs";
-import comments from "../models/comments";
 // define post comment function
 export const addComment = asyncWrapper(async (req, res) => {
   const blogId = req.params.id;
@@ -16,8 +15,9 @@ export const addComment = asyncWrapper(async (req, res) => {
     {
      $push:{comments:newComment._id}
     })
-  res.status(201).json({
-    message: "comment created",
+    const message="comment created";
+  res.success({
+    message,
     data: newComment,
   });
 });
@@ -28,12 +28,14 @@ export const deleteComment = asyncWrapper(async (req, res) => {
   const commentor = activeComment.user.toString();
   if (req.authuser._id === commentor) {
     await Comment.findByIdAndRemove({ _id: commentId });
-    res.status(200).json({ message: "commented deleted" });
+    const message="comment deleted";
+    res.success({
+      message,
+    });
   } else {
-    res
-      .status(403)
-      .json({ message: "you are not allowed to delete this comment" });
-  }
+        res
+      .fail()
+        }
 });
 //edit comment
 export const editComment = asyncWrapper(async (req, res) => {
@@ -44,10 +46,11 @@ export const editComment = asyncWrapper(async (req, res) => {
   if (req.authuser._id === commentor) {
     activeComment.comment = req.body.comment;
     activeComment.save();
-    res.status(200).json({ message: "commented updated", data: activeComment });
+    res.success({
+      message,
+    });
   } else {
-    res
-      .status(403)
-      .json({ message: "you are not allowed to edit this comment" });
-  }
+        res
+      .fail()
+        }
 });

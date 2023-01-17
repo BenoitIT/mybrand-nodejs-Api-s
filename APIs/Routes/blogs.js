@@ -19,7 +19,7 @@ BlogRouter.post("/blogs", auth, upload.single("blogImage"), createBlog);
 BlogRouter.get("/blogs", listBlogs);
 BlogRouter.get("/blog/:id", findSingleBlog);
 BlogRouter.delete("/blog/:id", auth, deleteBlog);
-BlogRouter.patch("/blog/:id", auth, updateBlog);
+BlogRouter.patch("/blog/:id", auth, upload.single("blogImage"),updateBlog);
 //comments
 BlogRouter.post("/blog/:id/addcomment", auth, addComment);
 BlogRouter.delete("/blog/comments/delete/:commentId", auth, deleteComment);

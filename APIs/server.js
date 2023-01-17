@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-
+import { JSend } from "jsend-express";
 import { ConnectDb } from "./connections/mongDBconnect";
 import {BlogRouter} from "./Routes/blogs";
 import {MessageRouter} from "./Routes/messages";
@@ -14,11 +14,13 @@ import  {
   handleInternalServerError,
 } from "./middlewares/handleNotefound";
 const app = express();
+const jSend = new JSend({ name: 'mybrand', version: 'X.X.X', release: 'XX' });
 dotenv.config();
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.json());
+app.use(jSend.middleware.bind(jSend))
 
 app.use(BlogRouter);
 app.use('/messages',MessageRouter);

@@ -18,24 +18,34 @@ export const createBlog = asyncWrapper(async (req, res) => {
 //display all blogs
 export const listBlogs = asyncWrapper(async (req, res) => {
   const blogs = await Blog.find({});
-  res.status(200).json({ data: blogs });
+  res.success({ data: blogs  })
 });
 //find single blog
 export const findSingleBlog = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const blog = await Blog.findOne({ _id: id }).populate("comments","comment").exec();
-  res.status(200).json({ data: blog });
+   res.success({ data: blog })
 });
 //delete a single blog
 export const deleteBlog = asyncWrapper(async (req, res) => {
   const { id } = req.params;
+  const message='blog is deleted"'
   await Blog.findByIdAndDelete({ _id: id });
-  res.sendStatus(200).json({ message: "blog is deleted" });
+  res.success({ message })
 });
 //update  single blog
 export const updateBlog = asyncWrapper(async (req, res) => {
+  const uploaderFn=async(imgPath)=>await uploads(imgPath,'blogImage');
+  const actualPath=req.file.path;
+  const newPath= await uploaderFn(actualPath);
   const { id } = req.params;
-  const blog = await Blog.findByIdAndUpdate({ _id: id }, req.body);
-  res.status(200).json({ data: blog });
+  const blog = await Blog.findOne({ _id: id }).exec();
+  blog.title= req.body.title,
+  blog.category= req.body.category,
+  blog.blogImage=newPath.url,
+  blog.blogDescription= req.body.blogDescription,
+  blog.save();
+  const message='updated success'
+  res.success({ data:blog ,message })
 });
 

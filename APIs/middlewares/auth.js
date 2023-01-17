@@ -1,13 +1,19 @@
 import JWT from 'jsonwebtoken';
-import { asyncWrapper } from '../middlewares/asyncWrapper';
 require("dotenv").config();
-export const auth = asyncWrapper(async (req, res, next) => {
+export const auth = async (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
-    res.status(403).json({ message: `access denied for this page`});
+       res.fail()
   }
-  const mainToken = await token.split(" ")[1];
+  try{
+   const mainToken = await token.split(" ")[1];
   const decordedToken = await JWT.verify(mainToken, process.env.APP_SECRET);
   req.authuser = decordedToken;
   next();
-});
+  }
+  catch(ex){
+     return res.status(400).json({
+            message: "access get expired!,login again"
+        })
+  }
+ };
