@@ -27,10 +27,9 @@ export const createUser = asyncWrapper(async (req, res) => {
 export const login = asyncWrapper(async (req, res) => {
   const cookie = req.headers?.cookie;
   if (cookie) {
-    let cookieValue=cookie.split(';');
-    const ActiveRefreshToken=cookieValue[0].substring(13)
-      //res.clearCookie("refreshToken");
-    let user = await User.findOne({ refreshToken:ActiveRefreshToken }).exec();
+    let cookieValues=cookie.split(';');
+    const ActiveRefreshToken=cookieValues.find(value=>value.startsWith('refreshToken')).substring(13);
+     let user = await User.findOne({ refreshToken:ActiveRefreshToken }).exec();
   if(user){
     const accessToken = JWT.sign(
       { _id: user._id, email: user.email },
