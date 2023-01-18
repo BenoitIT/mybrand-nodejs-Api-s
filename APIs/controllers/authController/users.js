@@ -1,9 +1,9 @@
-import  User from "../../models/users";
+import User from "../../models/users";
 import Bcrypt from "bcrypt";
 import loadash from "lodash";
-import  JWT from "jsonwebtoken";
+import JWT from "jsonwebtoken";
 require("dotenv").config();
-import  { asyncWrapper } from "../../middlewares/asyncWrapper";
+import { asyncWrapper } from "../../middlewares/asyncWrapper";
 //create user function
 export const createUser = asyncWrapper(async (req, res) => {
   const salt = await Bcrypt.genSalt(10);
@@ -26,23 +26,30 @@ export const createUser = asyncWrapper(async (req, res) => {
 //login function
 export const login = asyncWrapper(async (req, res) => {
   const cookie = req.headers?.cookie;
-  if (cookie) {
-    let cookieValues=cookie.split(';');
-    const ActiveRefreshToken=cookieValues.find(value=>value.startsWith('refreshToken')).substring(13);
-     let user = await User.findOne({ refreshToken:ActiveRefreshToken }).exec();
-  if(user){
-    const accessToken = JWT.sign(
-      { _id: user._id, email: user.email },
-      process.env.APP_SECRET,
-      { expiresIn: "3600s" }
-    );
-     //store refresh token in cookies
-    res.json({ message: "welcome",accessToken });
+  let ActiveRefreshToken;
+    if (cookie) {
+   let cookieValues = cookie.split(";");
+   ActiveRefreshToken = cookieValues
+      .find((value) => value.startsWith("refreshToken"))
+      .substring(13);
   }
-  else{
-    res.sendStatus(403)
-  }
-  } else {
+    if (ActiveRefreshToken) {
+      let user = await User.findOne({
+        refreshToken: ActiveRefreshToken,
+      }).exec();
+      if (user) {
+        const accessToken = JWT.sign(
+          { _id: user._id, email: user.email },
+          process.env.APP_SECRET,
+          { expiresIn: "3600s" }
+        );
+        //store refresh token in cookies
+        res.json({ message: "welcome", accessToken });
+      } else {
+        res.sendStatus(403);
+      }
+    }
+   else {
     //in case the user has been logged out
     const email = req.body.email;
     const password = req.body.password;
@@ -71,8 +78,8 @@ export const login = asyncWrapper(async (req, res) => {
           maxAge: 24 * 60 * 60 * 2000,
         });
         //store refreshToken in databse
-        user.refreshToken=refreshToken
-        await user.save()
+        user.refreshToken = refreshToken;
+        await user.save();
         res.json({ message: "welcome", accessToken });
       }
     } else {
