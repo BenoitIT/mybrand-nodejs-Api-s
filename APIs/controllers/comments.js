@@ -46,6 +46,7 @@ export const editComment = asyncWrapper(async (req, res) => {
   if (req.authuser._id === commentor) {
     activeComment.comment = req.body.comment;
     activeComment.save();
+    const message="success";
     res.success({
       message,
     });
