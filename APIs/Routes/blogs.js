@@ -14,7 +14,7 @@ import {
   deleteBlog,
   updateBlog,
 } from "../controllers/blogs";
-//routes
+//blog routes
 BlogRouter.post("/Api/blogs/new", auth, upload.single("blogImage"), createBlog);
 BlogRouter.get("/Api/blogs/all", listBlogs);
 BlogRouter.get("/Api/blogs/blog/:id", findSingleBlog);
