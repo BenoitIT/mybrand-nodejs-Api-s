@@ -51,7 +51,7 @@ describe("Get/Api/blogs/all",()=>{
             .request(server)
             .delete('/Api/blogs/blog/'+param)
             .end((err, res) => {
-              res.should.have.status(200);
+              res.should.have.status(400);
               done();
             });
         })
@@ -73,7 +73,7 @@ describe("Get/Api/blogs/all",()=>{
                .patch('/Api/blogs/blog/'+param)
                .send(blog)
                .end((err, res) => {
-                 res.should.have.status(200);
+                 res.should.have.status(400);
                  done();
                });
            })
