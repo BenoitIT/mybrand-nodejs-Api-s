@@ -470,7 +470,7 @@ tags: [
 },
 }
 
-docrouter.use('/', serve, setup(options));
+docrouter.use('/documentatioms', serve, setup(options));
 
 // module.exports = docrouter;
 
