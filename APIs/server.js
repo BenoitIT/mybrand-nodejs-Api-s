@@ -42,8 +42,8 @@ app.listen(
 );
 mongoose.set("strictQuery", true);
 const startApp = async () => {
-  try{
   const dBConn = await ConnectDb(process.env.mongoDbURL);
+  try{
   if (dBConn) {
     console.log("database connected successfully");
   }}catch(ex){
@@ -51,3 +51,4 @@ const startApp = async () => {
   }
 }
 startApp();
+module.exports=app;

@@ -8,7 +8,7 @@ import {
 } from "../controllers/messages";
 export const MessageRouter = express.Router();
 //messages routes
-MessageRouter.get('/Api/messages/all',auth,getAll);
-MessageRouter.post('/Api/messages/new',createMessage);
-MessageRouter.get("messages/message/:id",auth,readOne);
-MessageRouter.delete("messages/message/delete/:id",auth,deleteMes);
+MessageRouter.get("/all",auth,getAll);
+MessageRouter.post("/new",createMessage);
+MessageRouter.get("/message/:id",auth,readOne);
+MessageRouter.delete("/message/delete/:id",auth,deleteMes);
