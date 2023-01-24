@@ -14,13 +14,13 @@ import {
   deleteBlog,
   updateBlog,
 } from "../controllers/blogs";
-//blog routes
-BlogRouter.post("/blogs", auth, upload.single("blogImage"), createBlog);
-BlogRouter.get("/blogs", listBlogs);
-BlogRouter.get("/blog/:id", findSingleBlog);
-BlogRouter.delete("/blog/:id", auth, deleteBlog);
-BlogRouter.patch("/blog/:id", auth, upload.single("blogImage"),updateBlog);
+//routes
+BlogRouter.post("/Api/blogs/new", auth, upload.single("blogImage"), createBlog);
+BlogRouter.get("/Api/blogs/all", listBlogs);
+BlogRouter.get("/Api/blogs/blog/:id", findSingleBlog);
+BlogRouter.delete("/Api/blog/:id", auth, deleteBlog);
+BlogRouter.patch("/Api/blog/:id", auth, upload.single("blogImage"),updateBlog);
 //comments
-BlogRouter.post("/blog/:id/addcomment", auth, addComment);
-BlogRouter.delete("/blog/comments/delete/:commentId", auth, deleteComment);
-BlogRouter.patch("/blog/comments/update/:commentId", auth, editComment);
+BlogRouter.post("/Api/blog/:id/addcomment", auth, addComment);
+BlogRouter.delete("/Api/blog/comments/delete/:commentId", auth, deleteComment);
+BlogRouter.patch("/Api/blog/comments/update/:commentId", auth, editComment);
