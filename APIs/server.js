@@ -13,7 +13,7 @@ import  {
   handleNotefound,
   handleInternalServerError,
 } from "./middlewares/handleNotefound";
-const app = express();
+ const app = express();
 const jSend = new JSend({ name: 'mybrand', version: 'X.X.X', release: 'XX' });
 dotenv.config();
 app.use(bodyParser.urlencoded({
@@ -23,8 +23,8 @@ app.use(express.json());
 app.use(jSend.middleware.bind(jSend))
 
 app.use(BlogRouter);
-app.use('/messages',MessageRouter);
-app.use('/admin', UserRouter);
+app.use('/Api/messages',MessageRouter);
+app.use('/Api/admin', UserRouter);
 
 app.use(handleBadRequest);
 app.use(handleNotefound);
@@ -33,9 +33,9 @@ app.use(handleInternalServerError);
 
 const PORT = process.env.PORT;
 mongoose.set("strictQuery", true);
-const startApp = async (req,res) => {
-  try{
+const startApp = async () => {
   const dBConn = await ConnectDb(process.env.mongoDbURL);
+  try{
   if (dBConn) {
     console.log("database connected successfully");
     app.listen(
@@ -43,7 +43,8 @@ const startApp = async (req,res) => {
       console.log(`application is listening to port ${PORT}....`)
     );
   }}catch(ex){
-   res.json({message:'could not connect to database'})
+   console.log('could not connect to database');
   }
 }
 startApp();
+module.exports=app;
