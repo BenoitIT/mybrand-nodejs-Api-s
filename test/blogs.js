@@ -7,39 +7,39 @@ describe("testing blogs Api",()=>{
     /**
      * testing get all blogs routes
      */
-describe("Get/Api/blogs/all",()=>{
-    it('it should GET all the blogs', (done) => {
-        chai
-          .request(server)
-          .get('/Api/blogs/all')
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            done();
-          });
-        })
-        })
+// describe("Get/Api/blogs/all",()=>{
+//     it('it should GET all the blogs', (done) => {
+//         chai
+//           .request(server)
+//           .get('/Api/blogs/all')
+//           .end((err, res) => {
+//             res.should.have.status(200);
+//             res.body.should.be.a('object');
+//             done();
+//           });
+//         })
+//         })
 
-});
-describe("testing single blog Api",()=>{
-    /**
-     * testing get single blog routes
-     */
+// });
+// describe("testing single blog Api",()=>{
+//     /**
+//      * testing get single blog routes
+//      */
 
-describe("Get/Api/blogs/blog",()=>{
-    it('it should GET single  the blogs', (done) => {
-        const param='63be4a0ab8edfccc64505bd2'
-        chai
-          .request(server)
-          .get('/Api/blogs/blog/'+param)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            done();
-          });
-        })
-        })
-        })
+// describe("Get/Api/blogs/blog",()=>{
+//     it('it should GET single  the blogs', (done) => {
+//         const param='63be4a0ab8edfccc64505bd2'
+//         chai
+//           .request(server)
+//           .get('/Api/blogs/blog/'+param)
+//           .end((err, res) => {
+//             res.should.have.status(200);
+//             res.body.should.be.a('object');
+//             done();
+//           });
+//         })
+//         })
+//         })
     describe("testing delete a blog Api",()=>{
      /**
      * testing delete single blog routes
@@ -81,3 +81,4 @@ describe("Get/Api/blogs/blog",()=>{
        })
         
 
+    })

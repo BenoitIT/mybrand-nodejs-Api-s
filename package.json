@@ -37,6 +37,7 @@
     "mongoose-type-url": "^2.1.0",
     "multer": "^1.4.5-lts.1",
     "npm": "^9.3.1",
+    "sinon": "^15.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0"
   },
