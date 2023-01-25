@@ -4,16 +4,16 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { JSend } from "jsend-express";
-import { ConnectDb } from "./connections/mongDBconnect";
-import {BlogRouter} from "./Routes/blogs";
-import {MessageRouter} from "./Routes/messages";
-import  { UserRouter} from "./Routes/users";
-import { docrouter } from "./documentation/swagger.doc";
+import { ConnectDb } from "./connections/mongDBconnect.js";
+import {BlogRouter} from "./Routes/blogs.js";
+import {MessageRouter} from "./Routes/messages.js";
+import  { UserRouter} from "./Routes/users.js";
+import { docrouter } from "./documentation/swagger.doc.js";
 import  {
   handleBadRequest,
   handleNotefound,
   handleInternalServerError,
-} from "./middlewares/handleNotefound";
+} from "./middlewares/handleNotefound.js";
 
 const app = express();
 const jSend = new JSend({ name: 'mybrand', version: 'X.X.X', release: 'XX' });
