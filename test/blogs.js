@@ -26,7 +26,7 @@ describe("testing single blog Api",()=>{
      * testing get single blog routes
      */
 
-describe("Get/Api/blogs/all",()=>{
+describe("Get/Api/blogs/blog",()=>{
     it('it should GET single  the blogs', (done) => {
         const param='63be4a0ab8edfccc64505bd2'
         chai
