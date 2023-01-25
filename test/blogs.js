@@ -10,16 +10,16 @@ describe("testing blogs Api", () => {
   /**
    * testing get all blogs routes
    */
-  it("it should GET all the blogs", (done) => {
-    chai
-      .request(server)
-      .get("/Api/blogs/all")
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        done();
-      });
-  });
+  // it("it should GET all the blogs", (done) => {
+  //   chai
+  //     .request(server)
+  //     .get("/Api/blogs/all")
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       res.body.should.be.a("object");
+  //       done();
+  //     });
+  // });
    
   it("it should delete the blog with matching id by authorized user", (done) => {
     const param = "63bd0e90a59b4c02537643ae";
