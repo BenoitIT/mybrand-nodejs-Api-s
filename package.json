@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "babel src -d dist",
-    "dev": "nm run build && nodemon --exec babel-node src/server.js",
+    "dev": "npm run build && nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
     "test": "mocha --require @babel/register --timeout 30000 --exit"
   },
