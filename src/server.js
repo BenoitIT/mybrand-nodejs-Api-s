@@ -36,15 +36,15 @@ app.use(handleInternalServerError);
 
 //start app configuration
 const PORT = process.env.PORT;
-app.listen(
-  PORT,
-  console.log(`application is listening to port ${PORT}....`)
-);
 mongoose.set("strictQuery", true);
 const startApp = async () => {
   const dBConn = await ConnectDb(process.env.mongoDbURL);
   try{
-  if (dBConn) {
+    if (dBConn) {
+    app.listen(
+      PORT,
+      console.log(`application is listening to port ${PORT}....`)
+    );
     console.log("database connected successfully");
   }}catch(ex){
    console.log('could not connect to database')
