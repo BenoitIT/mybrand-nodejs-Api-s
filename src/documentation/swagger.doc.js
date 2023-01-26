@@ -11,7 +11,7 @@ const options = {
     description:
       'this the list of BenDev brand API documentation created in node js.',
   },
-  host: 'http://localhost:3500',
+  host: 'http://localhost:8080',
 security: [
   {
     bearerAuth: [],
