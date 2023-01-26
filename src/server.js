@@ -41,14 +41,14 @@ const startApp = async () => {
   const dBConn = await ConnectDb(process.env.mongoDbURL);
   try{
     if (dBConn) {
-    app.listen(
-      PORT,
-      console.log(`application is listening to port ${PORT}....`)
-    );
-    console.log("database connected successfully");
-  }}catch(ex){
-   console.log('could not connect to database')
+      console.log("database connected successfully");
+    }}catch(ex){
+      console.log('could not connect to database')
+    }
   }
-}
-startApp();
+  startApp();
+  app.listen(
+    PORT,
+    console.log(`application is listening to port ${PORT}....`)
+  );
 module.exports=app;
