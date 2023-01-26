@@ -70,8 +70,8 @@ tags: [
                 $ref: '#/components/schemas/User',
               },
               example: {
-                email: 'admin@gmail.com',
-                password: '123456',
+                email:"benod35@gmail.com",
+                password:"bed12345"
               },
             },
           },
@@ -132,30 +132,15 @@ tags: [
     post:{
       tags:['Blog'],
       description:'Create new blog',
-    //   parameters:[
-    //   {
-    //   "in":"formData",
-    //   "name":"title",
-    //   "description":"Article title",
-    //   required:true
-    //    },
-    //   {
-    //   "in":"formData",
-    //   "name":"content",
-    //   "description":"Article content",
-    //   required:true
-    //    },
-    //   {
-    //   "in":"form",
-    //   "name":"photo",
-    //   scheme:{
-    //   type: 'string',
-    //   description: "Article image url",
-    //   format: 'binary'
-    // },
-    //   required:true
-    //    },
-    //   ],
+      // parameters:[
+      // {
+      // "in":"formData",
+      // "name":"title",
+      // "description":"Article title",
+      // required:true,
+      // required:true
+      // },
+      // ],
       requestBody: {
         content: {
           'multipart/form-data': {
@@ -262,7 +247,12 @@ tags: [
     post:{
       tags:['Blog'],
       description:'Comment on blog article',
-      parameters: [],
+      parameters: [
+        {
+           "in": "path",
+         "name": "id",
+          required: true,
+        }],
       requestBody: {
         content: {
           'application/json': {
@@ -270,7 +260,6 @@ tags: [
               $ref: '#/components/schemas/Blog',
             },
             example: {
-              article_id:"6251374247c7a6f93bdd52e7",
               comment:"that content is very helpful thanks"
             },
           },
@@ -294,7 +283,7 @@ tags: [
     }
   },
 
-  'Api/messages/new':{
+  '/Api/messages/new':{
     post:{
       tags:['Message'],
       security:[],
@@ -325,7 +314,7 @@ tags: [
       },
     }
   },
-  'Api/messages/all':{
+  '/Api/messages/all':{
     get:{
       tags:['Message'],
       description:'Getting all messages',
@@ -343,7 +332,7 @@ tags: [
     },
     }
     },
-  'Api/messages/message/{id}': {
+  '/Api/messages/message/{id}': {
     get: {
     security: [],
     tags: ['Message'],
@@ -423,15 +412,19 @@ tags: [
         properties: {
           title: {
             type: 'string',
-            description: "Article title",
+            description: "blog title",
           },
-          content: {
+          category: {
             type: 'string',
-            description: "Article content",
+            description: "blog category",
           },
-          photo: {
+          blogDescription: {
             type: 'string',
-            description: "Article image url",
+            description: "blog contents",
+          },
+          BlogImage: {
+            type: 'string',
+            description: "image url",
             format: 'binary'
           }
       },
@@ -470,7 +463,7 @@ tags: [
 },
 }
 
-docrouter.use('/documentatioms', serve, setup(options));
+docrouter.use('/documentation', serve, setup(options));
 
 // module.exports = docrouter;
 

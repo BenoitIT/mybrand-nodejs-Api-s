@@ -64,7 +64,7 @@ export const login = asyncWrapper(async (req, res) => {
         const accessToken = JWT.sign(
           { _id: user._id, email: user.email },
           process.env.APP_SECRET,
-          { expiresIn: "300s" }
+          { expiresIn: "3600s" }
         );
         const refreshToken = JWT.sign(
           { _id: user._id, email: user.email },
