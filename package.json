@@ -2,9 +2,11 @@
   "name": "mybrand-nodejs-api-s",
   "version": "1.0.0",
   "description": "new repository for storing api's with different branches",
-  "main": "APIs/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node APIs/server.js",
+    "build": "babel src -d dist",
+    "dev": "nm run build && nodemon --exec babel-node src/server.js",
+    "start": "node dist/server.js",
     "test": "mocha --require @babel/register --timeout 30000 --exit"
   },
   "repository": {
@@ -18,7 +20,6 @@
   },
   "homepage": "https://github.com/BenoitIT/mybrand-nodejs-Api-s#readme",
   "dependencies": {
-    "@babel/core": "^7.20.12",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
     "bcrypt": "^5.1.0",
@@ -42,11 +43,12 @@
     "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/register": "^7.18.9",
     "eslint": "^8.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.4",
     "nodemon": "^2.0.20"
   }
-  
 }
