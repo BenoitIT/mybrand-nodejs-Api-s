@@ -42,13 +42,13 @@ const startApp = async () => {
   try{
     if (dBConn) {
       console.log("database connected successfully");
+      app.listen(
+        PORT,
+        console.log(`application is listening to port ${PORT}....`)
+      );
     }}catch(ex){
       console.log('could not connect to database')
     }
   }
   startApp();
-  app.listen(
-    PORT,
-    console.log(`application is listening to port ${PORT}....`)
-  );
 module.exports=app;
