@@ -1,5 +1,5 @@
 import express from "express";
-import { upload } from "../cloudinary/multer";
+import upload from "../cloudinary/multer";
 import { auth } from "../middlewares/auth";
 import {
   addComment,
