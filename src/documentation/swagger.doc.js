@@ -334,7 +334,6 @@ tags: [
     },
   '/Api/messages/message/{id}': {
     get: {
-    security: [],
     tags: ['Message'],
     description: 'Get single blog by id',
     parameters: [
@@ -357,7 +356,6 @@ tags: [
 
 '/Api/messages/message/delete/{id}': {
   delete: {
-  security: [],
   tags: ['Message'],
   description: 'delete single blog by id',
   parameters: [
@@ -422,7 +420,7 @@ tags: [
             type: 'string',
             description: "blog contents",
           },
-          BlogImage: {
+          blogImage: {
             type: 'string',
             description: "image url",
             format: 'binary'
