@@ -2,7 +2,7 @@ import Messages from "../models/messages";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 export const getAll = async (req, res) => {
   const message = await Messages.find({});
-  res.json({ message });
+  res.status(200).json({ message });
 };
 export const createMessage = asyncWrapper(async (req, res) => {
   const message = await Messages.create({

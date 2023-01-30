@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.36% </span>
+                <span class="strong">30.61% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/44</span>
+                <span class='fraction'>15/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.58% </span>
+                <span class="strong">31.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/41</span>
+                <span class='fraction'>14/44</span>
             </div>
         
             
@@ -133,7 +133,10 @@
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,8 +161,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -169,6 +172,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,6 +181,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -229,7 +235,7 @@ export const createBlog = <span class="fstat-no" title="function not covered" >a
 //display all blogs
 export const listBlogs = asyncWrapper(async (req, res) =&gt; {
   const blogs = await Blog.find({});
-  res.success({ data: blogs });
+<span class="cstat-no" title="statement not covered" >  res.success({ data: blogs });</span>
 });
 //find single blog
 export const findSingleBlog =<span class="fstat-no" title="function not covered" >async (r</span>eq, res) =&gt; {
@@ -238,6 +244,7 @@ export const findSingleBlog =<span class="fstat-no" title="function not covered"
   const blog = <span class="cstat-no" title="statement not covered" >await Blog.findOne({ _id: id })</span>
     .populate("comments", "comment")
     .exec();
+<span class="cstat-no" title="statement not covered" >  if(!blog)<span class="cstat-no" title="statement not covered" >return res.status(404).json({message:'message not found'});</span></span>
 <span class="cstat-no" title="statement not covered" >  res.success({ data: blog });</span>
 } catch (ex) {
 <span class="cstat-no" title="statement not covered" >  return res.status(400).json({</span>
@@ -250,6 +257,8 @@ export const deleteBlog = <span class="fstat-no" title="function not covered" >a
 <span class="cstat-no" title="statement not covered" >  try{</span>
   const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
   const message = <span class="cstat-no" title="statement not covered" >'blog is deleted"';</span>
+  const blog= <span class="cstat-no" title="statement not covered" >await Blog.findOne({_id});</span>
+<span class="cstat-no" title="statement not covered" >  if(!blog)<span class="cstat-no" title="statement not covered" >return res.status(404).json({message:'message not found'});</span></span>
 <span class="cstat-no" title="statement not covered" >  await Blog.findByIdAndDelete({ _id: id });</span>
 <span class="cstat-no" title="statement not covered" >  res.success({ message });</span>
 } catch (ex) {
@@ -280,7 +289,7 @@ export const updateBlog = asyncWrapper(<span class="fstat-no" title="function no
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-30T05:14:51.951Z
+                at 2023-01-30T11:47:04.254Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

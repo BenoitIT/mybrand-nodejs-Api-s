@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.json());
 app.use(jSend.middleware.bind(jSend))
-//routes
+//routesa
 app.use(BlogRouter);
 app.use('/Api/messages',MessageRouter);
 app.use('/Api/admin', UserRouter);
@@ -51,4 +51,3 @@ const startApp = async () => {
     }
   }
   startApp();
-module.exports=app;

@@ -15,13 +15,19 @@ export const createUser = asyncWrapper(async (req, res) => {
   if (!email) {
     res.json({ message: `email field is empty` });
   } else {
+    const currentEmail=await User.findOne({email})
+     if(!currentEmail){
     const user = await User.create({
       userName,
       email,
       password: hashedPassword,
     });
-    res.json(loadash.pick(user, ["userName", "email"]));
+    res.status(201).json(loadash.pick(user, ["userName", "email"]));
   }
+  else{
+    res.status(409).json({status:'fail',message:'the user email already exist'})
+  }
+}
 });
 //login function
 export const login = asyncWrapper(async (req, res) => {
@@ -44,7 +50,7 @@ export const login = asyncWrapper(async (req, res) => {
           { expiresIn: "3600s" }
         );
         //store refresh token in cookies
-        res.json({ message: "welcome", accessToken });
+        res.status(200).json({ message: "welcome", data:accessToken });
       } else {
         res.sendStatus(403);
       }
@@ -80,7 +86,7 @@ export const login = asyncWrapper(async (req, res) => {
         //store refreshToken in databse
         user.refreshToken = refreshToken;
         await user.save();
-        res.json({ message: "welcome", accessToken });
+        res.status(200).json({ message: "welcome",data:accessToken });
       }
     } else {
       res.json({ message: "incorrect username and password" });
