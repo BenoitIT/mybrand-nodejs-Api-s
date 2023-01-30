@@ -33,6 +33,7 @@ export const findSingleBlog =async (req, res) => {
   const blog = await Blog.findOne({ _id: id })
     .populate("comments", "comment")
     .exec();
+  if(!blog)return res.status(404).json({message:'message not found'});
   res.success({ data: blog });
 } catch (ex) {
   return res.status(400).json({
@@ -45,6 +46,8 @@ export const deleteBlog = async (req, res) => {
   try{
   const { id } = req.params;
   const message = 'blog is deleted"';
+  const blog= await Blog.findOne({_id});
+  if(!blog)return res.status(404).json({message:'message not found'});
   await Blog.findByIdAndDelete({ _id: id });
   res.success({ message });
 } catch (ex) {
