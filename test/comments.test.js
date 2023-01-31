@@ -4,14 +4,14 @@ const chaiHttp = require("chai-http");
 import server from "./server.test";
 const should = chai.should();
 chai.use(chaiHttp);
-let id;
-describe('should get blog id',async()=>{
-  const blog= await chai.request(server).get('/Api/blogs/all');
-    const texts=blog.text;
-    const decordedData=JSON.parse(texts)
-     id=decordedData.data[0]._id;
-})
 
+// describe('should get blog id',async()=>{
+//   const blog= await chai.request(server).get('/Api/blogs/all');
+//     const texts=blog.text;
+//     const decordedData=JSON.parse(texts)
+//      id=decordedData.data[0]._id;
+// })
+const id='g5273638svddhddffhdga'
 describe("testing comments", () => {
   /**
    * testing get all blogs routes

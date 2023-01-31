@@ -14,7 +14,8 @@ export const createBlog = async (req, res) => {
       blogImage: newPath.url,
       blogDescription: req.body.blogDescription,
     });
-    res.status(201).json({ message: "post blogs sent" });
+    res.status(201).json({ message: "post blogs sent" ,
+                            data:newBlog});
   } catch (ex) {
     return res.status(400).json({
       message: "the blog contents already exist",
@@ -46,12 +47,12 @@ export const findSingleBlog =async (req, res) => {
 //delete a single blog
 export const deleteBlog = async (req, res) => {
   try{
-  const { id } = req.params;
-  const message = 'blog is deleted"';
-  const blog= await Blog.findOne({_id});
-  if(!blog)return res.status(404).json({message:'message not found'});
-  await Blog.findByIdAndDelete({ _id: id });
-  res.success({ message });
+  const  _id  = req.params.id;
+  const blog= await Blog.findOne({_id}).exec();
+  if(!blog){return res.status(404).json({message:'message not found'});
+  }
+  blog.remove();
+  res.status(204).json({message: 'blog has been deleted'});
 } catch (ex) {
   return res.status(400).json({
     message: "the blog is not exist",
