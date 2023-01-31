@@ -8,7 +8,14 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-
+env:
+  PORT: ${{secrets.PORT}}
+  APP_SECRET: ${{secrets.APP_SECRET}}
+  CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
+  CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+  API_KEY: ${{secrets.API_KEY}}
+  API_SECRET: ${{secrets.API_SECRET}}
+  TESTDB: ${{secrets.TESTDB}}
 jobs:
   build:
 
