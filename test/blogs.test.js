@@ -1,11 +1,53 @@
 const chai = require("chai");
-const expect = require("chai").expect();
+const fs =require('fs');
 const chaiHttp = require("chai-http");
 const Blog = require("../src/models/blogs");
+const path = require('path')
 import server from "./server.test";
-const should = chai.should();
+chai.should();
 chai.use(chaiHttp);
+/**
+ * create a new blog test
+ */
+describe("POST a new blog", () => {
+  let token;
+  before(async () => {
+    const response = await chai
+      .request(server)
+      .post('/Api/admin/login')
+      .send({
+        email: 'test@test.com',
+        password: 'password1'
+      });
+      token = response.body.data;
+  });
+  beforeEach(async () => {
+    try {
+      await Blog.deleteMany({});
+    } catch (error) {}
+  });
 
+  it("should create the new blog", async () => {
+    const blogData = {
+      title: "test1",
+      category: "testtu",
+      blogDescription: "description contents hhdt",
+      blogImage: "image.jpg"
+    };
+
+    const res = await chai
+      .request(server)
+      .post("/Api/blogs/new")
+      .set('Authorization',`Bearer ${token}`)
+      .attach('blogImage', fs.readFileSync(path.join(__dirname, 'image.png')), 'image.png')  
+      .field("title", blogData.title)
+      .field("category", blogData.category)
+      .field("blogDescription", blogData.blogDescription)
+
+    res.should.have.status(201);
+    res.body.should.have.property("message");
+  });
+});
 describe("testing blogs Api", () => {
   /**
    * testing get all blogs routes
@@ -24,7 +66,7 @@ describe("testing blogs Api", () => {
     const param = "63be7492018014383b80cd4b";
     chai
       .request(server)
-      .get("/Api/blogs/blog/"+ param)
+      .get(`/Api/blogs/blog/${param}`)
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.be.a("object");
@@ -35,7 +77,7 @@ describe("testing blogs Api", () => {
     const param = "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
-      .get("/Api/blogs/blog/"+ param)
+      .get(`/Api/blogs/blog/${param}`)
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property('message');

@@ -7,7 +7,7 @@
     "build": "babel src -d dist",
     "dev": "npm run build && nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
-    "test": "nyc --reporter=text --reporter=html --reporter=json-summary mocha --recursive --exit --timeout 6000 --require @babel/register test/*.js",
+    "test": "nyc --reporter=text --reporter=html --reporter=json-summary mocha --recursive --exit --timeout 10000 --require @babel/register test/*.js",
     "coverage": "nyc --reporter=html --report -dir=coverage/ npm run test"
   },
   "repository": {

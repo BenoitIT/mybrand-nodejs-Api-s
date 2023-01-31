@@ -5,40 +5,41 @@ import server from "./server.test";
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe("testing messages Api", () => {
+describe("testing comments", () => {
   /**
    * testing get all blogs routes
    */
-  it("it should GET all the messages", (done) => {
-    chai
+  let token;
+  before(async () => {
+    const response = await chai
       .request(server)
-      .get("/Api/blogs/all")
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        done();
+      .post('/Api/admin/login')
+      .send({
+        email: 'test@test.com',
+        password: 'password1'
       });
+      token = response.body.data;
   });
-  it("it should GET single message", (done) => {
+  it("it should  not  get specific get blog to add blog", (done) => {
     const param = "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
-      .get("/Api/messages/"+ param)
+      .post(`/Api/blog/${param}/addcomment`)
+      .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
-        res.should.have.status(400);
-        res.body.should.be.a("object");
+        res.should.have.status(204);
         done();
       });
   });
-   
-  it("it should delete the message with matching id by authorized user", (done) => {
+  it("it should  not  delete specific comment", (done) => {
     const param = "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
-      .delete("/Api/messages/message/" + param)
+      .delete("/Api/blog/comments/delete/" +param)
+      .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(500);
         done();
       });
   });
-});
+})

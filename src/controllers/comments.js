@@ -4,8 +4,10 @@ import Blog from "../models/blogs";
 // define post comment function
 export const addComment = asyncWrapper(async (req, res) => {
   const blogId = req.params.id;
+  if(!blogId)return res.status(404).json({message:'no blog found'});
   const userId = req.authuser._id;
   const { comment } = req.body;
+  if(!comment)return res.status(204).json({message:'comment is empty'});
   const newComment = await Comment.create({
     blog: blogId,
     user: userId,
@@ -24,6 +26,7 @@ export const addComment = asyncWrapper(async (req, res) => {
 //delete comment
 export const deleteComment = asyncWrapper(async (req, res) => {
   const { commentId } = req.params;
+  if(!commentId )return res.status(404).json({message:'no comment found'});
   const activeComment = await Comment.findOne({ _id: commentId }).exec();
   const commentor = activeComment.user.toString();
   if (req.authuser._id === commentor) {

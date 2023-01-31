@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/49</span>
+                <span class='fraction'>28/49</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.18% </span>
+                <span class="strong">56.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/44</span>
+                <span class='fraction'>25/44</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -141,18 +141,18 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,8 +161,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -213,19 +213,19 @@
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { uploads } from "../cloudinary/cloudinary";
 &nbsp;
-export const createBlog = <span class="fstat-no" title="function not covered" >async (r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const uploader = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (p</span>ath) =&gt; <span class="cstat-no" title="statement not covered" >await uploads(path, "blogImg");</span></span>
-    const actualPath = <span class="cstat-no" title="statement not covered" >req.file.path;</span>
+export const createBlog = async (req, res) =&gt; {
+  try {
+    const uploader = async (path) =&gt; await uploads(path, "blogImg");
+    const actualPath = req.file.path;
     //initializing cloudinary path
-    const newPath = <span class="cstat-no" title="statement not covered" >await uploader(actualPath);</span>
-    const newBlog = <span class="cstat-no" title="statement not covered" >await Blog.create({</span>
+    const newPath = await uploader(actualPath);
+    const newBlog = await Blog.create({
       title: req.body.title,
       category: req.body.category,
       blogImage: newPath.url,
       blogDescription: req.body.blogDescription,
     });
-<span class="cstat-no" title="statement not covered" >    res.status(201).json({ message: "post blogs sent" });</span>
+    res.status(201).json({ message: "post blogs sent" });
   } catch (ex) {
 <span class="cstat-no" title="statement not covered" >    return res.status(400).json({</span>
       message: "the blog contents already exist",
@@ -289,7 +289,7 @@ export const updateBlog = asyncWrapper(<span class="fstat-no" title="function no
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-30T16:20:42.815Z
+                at 2023-01-31T11:52:43.089Z
             </div>
         <script src="../prettify.js"></script>
         <script>
