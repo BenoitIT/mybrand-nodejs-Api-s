@@ -17,10 +17,9 @@ export const addComment = asyncWrapper(async (req, res) => {
     {
      $push:{comments:newComment._id}
     })
-    const message="comment created";
-  res.success({
-    message,
-    data: newComment,
+  res.json(200).json({
+    message:'comment added',
+    data:newComment
   });
 });
 //delete comment

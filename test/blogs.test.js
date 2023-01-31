@@ -11,6 +11,7 @@ chai.use(chaiHttp);
  */
 let token;
 let _id;
+let commID
 describe("POST a new blog", () => {
   
   before(async () => {
@@ -66,13 +67,17 @@ describe("POST a new blog", () => {
        done();
       });
     });
-    // it("it should GET single blog",async() => {
-    // await chai.request(server)
-    //           .get(`/Api/blogs/blog/${_id}`)
-    //           .end((err,res)=>{
-    //             res.should.have.status(200)
-    //           })
-    // });
+    it('it should GET a blog by the given id', (done) => {
+     
+        chai.request(server)
+          .get(`/Api/blogs/blog/${_id}`)
+          .set('Authorization', `Bearer ${token}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+    });
+  });
     it("it should  not get single blog single blog", (done) => {
       const id= "63bd0e90a59b4c02537643ae";
       chai
@@ -129,3 +134,55 @@ describe("POST a new blog", () => {
       });
   });
 });
+describe("testing comments", () => {
+  /**
+   * testing get all blogs routes
+   */
+  it("it should get specific  blog to add comment", (done) => {
+    chai
+      .request(server)
+      .post(`/Api/blog/${_id}/addcomment`)
+      .set('Authorization',`Bearer ${token}`)
+      .send({
+        comment:'new comment'
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        // res.body.should.have.property("data");
+        // commID=res.body.data._id;
+        done();
+      });
+  });
+  it("it should  not  get specific get blog to add blog", (done) => {
+    const id='g5273638svddhddffhdga'
+    chai
+      .request(server)
+      .post(`/Api/blog/${id}/addcomment`)
+      .set('Authorization',`Bearer ${token}`)
+      .end((err, res) => {
+        res.should.have.status(204);
+        done();
+      });
+  });
+  // it("it should delete specific comment", (done) => {
+  //   chai
+  //     .request(server)
+  //     .delete(`/Api/blog/comments/delete/${commID}`)
+  //     .set('Authorization',`Bearer ${token}`)
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       done();
+  //     });
+  // });
+  it("it should  not  delete specific comment", (done) => {
+    const param = "63bd0e90a59b4c02537643ae";
+    chai
+      .request(server)
+      .delete("/Api/blog/comments/delete/" +param)
+      .set('Authorization',`Bearer ${token}`)
+      .end((err, res) => {
+        res.should.have.status(500);
+        done();
+      });
+  });
+})

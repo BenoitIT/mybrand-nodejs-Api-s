@@ -18,7 +18,7 @@ import {
 BlogRouter.post("/Api/blogs/new", auth, upload.single("blogImage"), createBlog);
 BlogRouter.get("/Api/blogs/all", listBlogs);
 BlogRouter.get("/Api/blogs/blog/:id", findSingleBlog);
-BlogRouter.delete("/Api/blog/:id", deleteBlog);
+BlogRouter.delete("/Api/blog/:id",auth, deleteBlog);
 BlogRouter.patch("/Api/blog/:id", auth, upload.single("blogImage"),updateBlog);
 //comments
 BlogRouter.post("/Api/blog/:id/addcomment", auth, addComment);
