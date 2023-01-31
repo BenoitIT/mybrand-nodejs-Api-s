@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">57.14% </span>
+                <span class="strong">73.46% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/49</span>
+                <span class='fraction'>36/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>4/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.81% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/44</span>
+                <span class='fraction'>33/44</span>
             </div>
         
             
@@ -136,7 +136,9 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,8 +163,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -172,7 +176,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,23 +185,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -235,7 +239,9 @@ export const createBlog = async (req, res) =&gt; {
 //display all blogs
 export const listBlogs = asyncWrapper(async (req, res) =&gt; {
   const blogs = await Blog.find({});
-  res.success({ data: blogs });
+  res.status(200).json({
+   status:'success',
+   data:blogs})
 });
 //find single blog
 export const findSingleBlog =async (req, res) =&gt; {
@@ -244,8 +250,8 @@ export const findSingleBlog =async (req, res) =&gt; {
   const blog = await Blog.findOne({ _id: id })
     .populate("comments", "comment")
     .exec();
-  <span class="missing-if-branch" title="else path not taken" >E</span>if(!blog)return res.status(404).json({message:'message not found'});
-<span class="cstat-no" title="statement not covered" >  res.success({ data: blog });</span>
+  if(!blog)return res.status(404).json({message:'message not found'});
+  res.success({ data: blog });
 } catch (ex) {
 <span class="cstat-no" title="statement not covered" >  return res.status(400).json({</span>
     message: "the blog is not exist",
@@ -253,24 +259,24 @@ export const findSingleBlog =async (req, res) =&gt; {
 }
 };
 //delete a single blog
-export const deleteBlog = <span class="fstat-no" title="function not covered" >async (r</span>eq, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >  try{</span>
-  const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-  const message = <span class="cstat-no" title="statement not covered" >'blog is deleted"';</span>
-  const blog= <span class="cstat-no" title="statement not covered" >await Blog.findOne({_id});</span>
+export const deleteBlog = async (req, res) =&gt; {
+  try{
+  const { id } = req.params;
+  const message = 'blog is deleted"';
+  const blog= await Blog.findOne({_id});
 <span class="cstat-no" title="statement not covered" >  if(!blog)<span class="cstat-no" title="statement not covered" >return res.status(404).json({message:'message not found'});</span></span>
 <span class="cstat-no" title="statement not covered" >  await Blog.findByIdAndDelete({ _id: id });</span>
 <span class="cstat-no" title="statement not covered" >  res.success({ message });</span>
 } catch (ex) {
-<span class="cstat-no" title="statement not covered" >  return res.status(400).json({</span>
+  return res.status(400).json({
     message: "the blog is not exist",
   })
 }
 };
 //update  single blog
-export const updateBlog = asyncWrapper(<span class="fstat-no" title="function not covered" >async (r</span>eq, res) =&gt; {
-  const uploaderFn = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (i</span>mgPath) =&gt; <span class="cstat-no" title="statement not covered" >await uploads(imgPath, "blogImage");</span></span>
-  const actualPath = <span class="cstat-no" title="statement not covered" >req.file.path;</span>
+export const updateBlog = asyncWrapper(async (req, res) =&gt; {
+  const uploaderFn = <span class="fstat-no" title="function not covered" >async (i</span>mgPath) =&gt; <span class="cstat-no" title="statement not covered" >await uploads(imgPath, "blogImage");</span>
+  const actualPath = req.file.path;
   const newPath = <span class="cstat-no" title="statement not covered" >await uploaderFn(actualPath);</span>
   const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
   const blog = <span class="cstat-no" title="statement not covered" >await Blog.findOne({ _id: id }).exec();</span>
@@ -289,7 +295,7 @@ export const updateBlog = asyncWrapper(<span class="fstat-no" title="function no
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-31T11:52:43.089Z
+                at 2023-01-31T16:53:45.461Z
             </div>
         <script src="../prettify.js"></script>
         <script>

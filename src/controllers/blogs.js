@@ -24,7 +24,9 @@ export const createBlog = async (req, res) => {
 //display all blogs
 export const listBlogs = asyncWrapper(async (req, res) => {
   const blogs = await Blog.find({});
-  res.success({ data: blogs });
+  res.status(200).json({
+   status:'success',
+   data:blogs})
 });
 //find single blog
 export const findSingleBlog =async (req, res) => {

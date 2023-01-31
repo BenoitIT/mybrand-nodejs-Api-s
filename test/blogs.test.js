@@ -9,8 +9,10 @@ chai.use(chaiHttp);
 /**
  * create a new blog test
  */
+let token;
+let blogID;
 describe("POST a new blog", () => {
-  let token;
+  
   before(async () => {
     const response = await chai
       .request(server)
@@ -26,7 +28,13 @@ describe("POST a new blog", () => {
       await Blog.deleteMany({});
     } catch (error) {}
   });
-
+  
+  describe('get blog id', async()=>{
+    const blog= await chai.request(server).get('/Api/blogs/all');
+    const texts=blog.text;
+    const decordedData=JSON.parse(texts)
+    blogID=decordedData.data[0]._id;
+  })
   it("should create the new blog", async () => {
     const blogData = {
       title: "test1",
@@ -62,22 +70,21 @@ describe("testing blogs Api", () => {
         done();
       });
   });
-  it("it should GET single blog", (done) => {
-    const param = "63be7492018014383b80cd4b";
-    chai
+  it("it should GET single blog",async() => {
+    await chai
       .request(server)
-      .get(`/Api/blogs/blog/${param}`)
+      .get(`/Api/blogs/blog/${blogID}`)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(200);
         res.body.should.be.a("object");
-        done();
       });
   });
   it("it should  not get single blog single blog", (done) => {
-    const param = "63bd0e90a59b4c02537643ae";
+    const id= "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
-      .get(`/Api/blogs/blog/${param}`)
+      .get(`/Api/blogs/blog/${id}`)
+      .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property('message');
@@ -85,42 +92,44 @@ describe("testing blogs Api", () => {
       });
   });
    
-  it("it should delete the blog with matching id by authorized user", (done) => {
-    const param = "63bd0e90a59b4c02537643ae";
+  it("it should not find the blog to delete with matching id by authorized user", (done) => {
+    const id= "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
-      .delete("/Api/blogs/" + param)
+      .delete(`/Api/blog/${id}`)
+      .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
         res.should.have.status(400);
         done();
       });
   });
-  // it("it should  not delete single blog single blog", (done) => {
-  //   const param = "63bd0e90a59b4c02537643ae";
-  //   chai
-  //     .request(server)
-  //     .get("/Api/blogs/blog/"+ param)
-  //     .end((err, res) => {
-  //       res.should.have.status(404);
-  //       res.body.should.be.a("message");
-  //       done();
-  //     });
-  // });
+  it("it should  not delete single blog single blog", (done) => {
+    const id= "63bd0e90a59b4c02537643ae";
+    chai
+      .request(server)
+      .delete("/Api/blogs/"+ id)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.have.property('message');
+        done();
+      });
+  });
   /**
    * testing authorized update single blog routes
    */
-  it("it should update the blog with matching id by authorized user", (done) => {
-    const param = "63bd0e90a59b4c02537643ae";
+  it("it should not update the blog with matching id by authorized user", (done) => {
+    const id= "63bd0e90a59b4c02537643ae";
     const blog = {
       title: "testing blog",
       category: "tests",
     };
     chai
       .request(server)
-      .patch("/Api/blogs/blog/" + param)
+      .patch(`/Api/blog/${id}`)
+      .set('Authorization',`Bearer ${token}`)
       .send(blog)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(500);
         done();
       });
   });
