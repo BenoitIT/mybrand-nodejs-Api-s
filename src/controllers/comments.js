@@ -17,7 +17,7 @@ export const addComment = asyncWrapper(async (req, res) => {
     {
      $push:{comments:newComment._id}
     })
-  res.json(200).json({
+  res.status(201).json({
     message:'comment added',
     data:newComment
   });
@@ -30,13 +30,9 @@ export const deleteComment = asyncWrapper(async (req, res) => {
   const commentor = activeComment.user.toString();
   if (req.authuser._id === commentor) {
     await Comment.findByIdAndRemove({ _id: commentId });
-    const message="comment deleted";
-    res.success({
-      message,
-    });
+    res.status(200).json({message:'comment has beeb deleted'});;
   } else {
-        res
-      .fail()
+    res.status(403).json({message:"can't delete this comment"});
         }
 });
 //edit comment
@@ -53,7 +49,6 @@ export const editComment = asyncWrapper(async (req, res) => {
       message,
     });
   } else {
-        res
-      .fail()
-        }
+      res.status(403).json({message:"can't update this comment"});
+  }
 });

@@ -90,7 +90,28 @@ describe("POST a new blog", () => {
         done();
       });
     });
-    
+    it("should update the existting blog", async () => {
+      const blogData = {
+        title: "test updates",
+        category: "testup",
+        blogDescription: "description contents hhdt",
+        blogImage: "image.jpg"
+      };
+  
+      const res = await chai
+        .request(server)
+        .patch(`/Api/blog/${_id}`)
+        .set('Authorization',`Bearer ${token}`)
+        .attach('blogImage', fs.readFileSync(path.join(__dirname, 'image.png')), 'image.png')  
+        .field("title", blogData.title)
+        .field("category", blogData.category)
+        .field("blogDescription", blogData.blogDescription)
+  
+      res.should.have.status(200);
+      res.body.should.have.property("message");
+      res.body.should.have.property("data");
+       _id=res.body.data._id;
+      });
     it("it should not find the blog to delete with matching id by authorized user", (done) => {
       // const id= "63bd0e90a59b4c02537643ae";
       chai
@@ -98,7 +119,6 @@ describe("POST a new blog", () => {
       .delete(`/Api/blog/${_id}`)
       .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
-        console.log(_id);
         res.should.have.status(204);
         done();
       });
@@ -147,9 +167,9 @@ describe("testing comments", () => {
         comment:'new comment'
       })
       .end((err, res) => {
-        res.should.have.status(200);
-        // res.body.should.have.property("data");
-        // commID=res.body.data._id;
+        res.should.have.status(201);
+        res.body.should.have.property("data");
+        commID=res.body.data._id;
         done();
       });
   });
@@ -164,22 +184,36 @@ describe("testing comments", () => {
         done();
       });
   });
-  // it("it should delete specific comment", (done) => {
-  //   chai
-  //     .request(server)
-  //     .delete(`/Api/blog/comments/delete/${commID}`)
-  //     .set('Authorization',`Bearer ${token}`)
-  //     .end((err, res) => {
-  //       res.should.have.status(200);
-  //       done();
-  //     });
-  // });
+  it("it should delete specific comment", (done) => {
+    chai
+      .request(server)
+      .delete(`/Api/blog/comments/delete/${commID}`)
+      .set('Authorization',`Bearer ${token}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message');
+        done();
+      });
+  });
   it("it should  not  delete specific comment", (done) => {
     const param = "63bd0e90a59b4c02537643ae";
     chai
       .request(server)
       .delete("/Api/blog/comments/delete/" +param)
       .set('Authorization',`Bearer ${token}`)
+      .end((err, res) => {
+        res.should.have.status(500);
+        done();
+      });
+  });
+  it("it should not update specific comment", (done) => {
+    chai
+      .request(server)
+      .patch(`/Api/blog/comments/update/${commID}`)
+      .set('Authorization',`Bearer ${token}`)
+      .send({
+        comment:'updated comment'
+      })
       .end((err, res) => {
         res.should.have.status(500);
         done();

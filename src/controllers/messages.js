@@ -11,16 +11,14 @@ export const createMessage = asyncWrapper(async (req, res) => {
     subject: req.body.subject,
     message: req.body.message,
   });
-  res.status(201).json({ message: "message sent" });
+  res.status(201).json({ message: "message sent",
+    data:message });
 });
 export const readOne = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const message = await Messages.findOne({ _id: id }).exec();
   if(!message)return res.status(404).json({message:'message not found'});
-
     res.json({ message });
-  
-  return res.status(402).json({ message: `no id found` });
 });
 export const deleteMes = asyncWrapper(async (req, res) => {
   const { _id } = req.params;
@@ -28,5 +26,5 @@ export const deleteMes = asyncWrapper(async (req, res) => {
   const message= await Messages.findOne({_id});
   if(!message)return res.status(404).json({message:'message not found'});
   await Messages.findByIdAndDelete({ _id });
-  res.json({ message: "message is removed" });
+  res.status(204).json({ message: "message is removed" });
 });

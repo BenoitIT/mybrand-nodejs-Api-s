@@ -1,5 +1,5 @@
 ## develop branch
-# mybrand-nodejs-Api-s ![check-code-coverage](https://img.shields.io/badge/code--coverage-78.86%25-yellow)
+# mybrand-nodejs-Api-s ![check-code-coverage](https://img.shields.io/badge/code--coverage-91.57%25-yellow)
 
 ### what does this branch have
 * this branch have all code merged for all feature branches
