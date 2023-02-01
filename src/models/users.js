@@ -20,6 +20,9 @@ const userSChema = new Schema({
     trim:true,
     minLength:6
 },
+isAdmin: {
+  type: Boolean
+},
 refreshToken:String
 });
 export default mongoose.model("User", userSChema);

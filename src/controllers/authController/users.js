@@ -1,6 +1,5 @@
 import User from "../../models/users";
 import Bcrypt from "bcrypt";
-import loadash from "lodash";
 import JWT from "jsonwebtoken";
 require("dotenv").config();
 import { asyncWrapper } from "../../middlewares/asyncWrapper";
@@ -21,8 +20,17 @@ export const createUser = asyncWrapper(async (req, res) => {
       userName,
       email,
       password: hashedPassword,
+      isAdmin:false
     });
-    res.status(201).json(loadash.pick(user, ["userName", "email"]));
+    const accessToken = JWT.sign(
+      { _id: user._id, 
+        email: user.email,
+        isAdmin: user.isAdmin},
+      process.env.APP_SECRET,
+      { expiresIn: "3600s" }
+    );
+    res.status(201).json({message:'account successfully created',
+                          data:accessToken});
   }
   else{
     res.status(409).json({status:'fail',message:'the user email already exist'})
@@ -45,7 +53,9 @@ export const login = asyncWrapper(async (req, res) => {
       }).exec();
       if (user) {
         const accessToken = JWT.sign(
-          { _id: user._id, email: user.email },
+          { _id: user._id, 
+            email: user.email,
+            isAdmin: user.isAdmin},
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
         );
@@ -68,7 +78,9 @@ export const login = asyncWrapper(async (req, res) => {
       if (checkedpassword) {
         //generate tokens
         const accessToken = JWT.sign(
-          { _id: user._id, email: user.email },
+          { _id: user._id, 
+            email: user.email,
+            isAdmin: user.isAdmin },
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
         );

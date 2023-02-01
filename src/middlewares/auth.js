@@ -17,3 +17,10 @@ export const auth = async (req, res, next) => {
         })
   }
  };
+
+ export const Admin = async(req, res, next) => {
+    if (!req.authuser.isAdmin) {
+        return res.status(403).json({ message: "access denied" })
+    }
+    next()
+}

@@ -1,5 +1,5 @@
 import express from "express";
-import {auth} from '../middlewares/auth';
+import {auth,Admin,} from '../middlewares/auth';
 import {
   getAll,
   readOne,
@@ -8,7 +8,7 @@ import {
 } from "../controllers/messages";
 export const MessageRouter = express.Router();
 //messages routes
-MessageRouter.get("/all",auth,getAll);
-MessageRouter.post("/new",createMessage);
-MessageRouter.get("/message/:id",auth,readOne);
-MessageRouter.delete("/message/delete/:id",auth,deleteMes);
+MessageRouter.get("/all",auth,Admin,getAll);
+MessageRouter.post("/new",Admin,createMessage);
+MessageRouter.get("/message/:id",auth,Admin,readOne);
+MessageRouter.delete("/message/delete/:id",auth,Admin,deleteMes);
