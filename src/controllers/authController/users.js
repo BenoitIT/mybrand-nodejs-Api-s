@@ -9,12 +9,12 @@ export const createUser = asyncWrapper(async (req, res) => {
   const hashedPassword = await Bcrypt.hash(req.body.password, salt);
   const { userName, email } = req.body;
   if (!userName) {
-    res.json({ message: `username field is empty` });
+    return res.json({ message: `username field is empty` });
   }
   if (!email) {
-    res.json({ message: `email field is empty` });
+    return res.json({ message: `email field is empty` });
   } else {
-    const currentEmail=await User.findOne({email})
+    const currentEmail=await User.findOne({email}).exec()
      if(!currentEmail){
     const user = await User.create({
       userName,
@@ -58,10 +58,10 @@ export const login = asyncWrapper(async (req, res) => {
             isAdmin: user.isAdmin},
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
-        );
-        //store refresh token in cookies
+        );s
         res.status(200).json({ message: "welcome", data:accessToken });
       } else {
+        res.clearCookie("refreshToken");
         res.sendStatus(403);
       }
     }
@@ -70,7 +70,7 @@ export const login = asyncWrapper(async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     if (!email || !password) {
-      res.json({ message: "enter email and password" });
+      return res.json({ message: "enter email and password" });
     }
     let user = await User.findOne({ email }).exec();
     if (user) {

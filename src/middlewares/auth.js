@@ -3,7 +3,7 @@ require("dotenv").config();
 export const auth = async (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
-       res.fail()
+       return res.fail()
   }
   try{
    const mainToken = await token.split(" ")[1];

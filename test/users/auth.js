@@ -21,6 +21,7 @@ export const createUser = asyncWrapper(async (req, res) => {
       userName,
       email,
       password: hashedPassword,
+      isAdmin:true
     });
     res.status(201).json(loadash.pick(user, ["userName", "email"]));
   }
@@ -43,7 +44,7 @@ export const login = asyncWrapper(async (req, res) => {
       if (checkedpassword) {
         //generate tokens
         const accessToken = JWT.sign(
-          { _id: user._id, email: user.email },
+          { _id: user._id, email: user.email,isAdmin:user.isAdmin },
           process.env.APP_SECRET,
         );
         

@@ -9,6 +9,6 @@ import {
 export const MessageRouter = express.Router();
 //messages routes
 MessageRouter.get("/all",auth,Admin,getAll);
-MessageRouter.post("/new",Admin,createMessage);
+MessageRouter.post("/new",createMessage);
 MessageRouter.get("/message/:id",auth,Admin,readOne);
 MessageRouter.delete("/message/delete/:id",auth,Admin,deleteMes);

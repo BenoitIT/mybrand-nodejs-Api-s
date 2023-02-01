@@ -17,7 +17,7 @@ describe('registering a user',()=>{
         .request(server)
         .post('/Api/admin/register')
         .send({
-          email: "test@test.com",
+          email: "ben@test.com",
           userName: "tester",
           password:'password1',
           refreshToken:''
@@ -51,7 +51,7 @@ describe('Testing login routes', () => {
       .request(server)
       .post('/Api/admin/login')
       .send({
-        email: "test@test.com",
+        email: "ben@test.com",
         password: "password1",
       })
       .end((err, res) => {

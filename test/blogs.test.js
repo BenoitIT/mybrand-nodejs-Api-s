@@ -19,8 +19,8 @@ describe("POST a new blog", () => {
       .request(server)
       .post('/Api/admin/login')
       .send({
-        email: 'test@test.com',
-        password: 'password1'
+        email: "ben@test.com",
+        password: "password1",
       });
       token = response.body.data;
   });
