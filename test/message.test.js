@@ -82,11 +82,10 @@ describe("testing messages Api", () => {
   it("it should delete the message with matching id by authorized user", (done) => {
     chai
     .request(server)
-    .delete(`/Api/messages/message/delete/ ${messID}`)
+    .delete(`/Api/messages/message/delete/${messID}`)
     .set('Authorization',`Bearer ${token}`)
     .end((err, res) => {
-      res.should.have.status(404);
-      res.body.should.have.property('message');
+      res.should.have.status(204);
       done();
     });
   });

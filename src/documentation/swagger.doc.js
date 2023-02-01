@@ -298,7 +298,7 @@ tags: [
             example: {
               senderName:"John Doe",
               senderEmail:"john@gmail.com",
-              messages:"testing message"
+              message:"testing message"
             },
           },
         },
@@ -343,21 +343,6 @@ tags: [
         required: true,
       }
     ],
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/Blog',
-          },
-          example: {
-            senderName:'sender name',
-            senderEmail: 'benoit@gmail.com',
-            message: 'check it',
-          },
-        },
-      },
-      required: true,
-    },
     responses: {
       200: {
         description: 'successfully',
@@ -468,7 +453,7 @@ tags: [
             type: 'string',
             description: 'sender email',
           },
-          messages: {
+          message: {
             type: 'string',
             description: 'message content',
           },
