@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import cors from "cors";
 import { JSend } from "jsend-express";
 import { ConnectDb } from "./connections/mongDBconnect.js";
 import {BlogRouter} from "./Routes/blogs.js";
 import {MessageRouter} from "./Routes/messages.js";
 import  { UserRouter} from "./Routes/users.js";
 import { docrouter } from "./documentation/swagger.doc.js";
+import { corsOpts } from "./middlewares/corsOption.js";
 import  {
   handleBadRequest,
   handleNotefound,
@@ -19,6 +21,7 @@ const app = express();
 const jSend = new JSend({ name: 'mybrand', version: 'X.X.X', release: 'XX' });
 dotenv.config();
 //middlewares
+app.use(cors(corsOpts));
 app.use(docrouter);
 app.use(bodyParser.urlencoded({
   extended: true
