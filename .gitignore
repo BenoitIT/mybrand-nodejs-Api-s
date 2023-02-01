@@ -4,5 +4,3 @@ node_modules
 /dist
 /coverage
 /.nyc_output
-./yarn.lock
-./yarn-error.log
