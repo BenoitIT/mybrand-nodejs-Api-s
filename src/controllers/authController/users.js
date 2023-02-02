@@ -6,8 +6,11 @@ import { asyncWrapper } from "../../middlewares/asyncWrapper";
 //create user function
 export const createUser = asyncWrapper(async (req, res) => {
   const salt = await Bcrypt.genSalt(10);
-  const hashedPassword = await Bcrypt.hash(req.body.password, salt);
-  const { userName, email } = req.body;
+  const { userName, email ,password} = req.body;
+  if(!password){
+    return res.json({ message: `password field is empty` });
+  }
+  const hashedPassword = await Bcrypt.hash(password, salt);
   if (!userName) {
     return res.json({ message: `username field is empty` });
   }
@@ -31,7 +34,8 @@ export const createUser = asyncWrapper(async (req, res) => {
       { expiresIn: "3600s" }
     );
     res.status(201).json({message:'account successfully created',
-                          data:accessToken});
+                          data:accessToken,
+                        role:user.isAdmin});
   }
   else{
     res.status(409).json({status:'fail',message:'the user email already exist'})
@@ -61,7 +65,7 @@ export const login = asyncWrapper(async (req, res) => {
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
         );
-        res.status(200).json({ message: "welcome", data:accessToken });
+        res.status(200).json({ message: "welcome", data:accessToken ,role:user.isAdmin});
       } else {
         res.clearCookie("refreshToken");
         res.sendStatus(403);
@@ -101,7 +105,7 @@ export const login = asyncWrapper(async (req, res) => {
         //store refreshToken in databse
         user.refreshToken = refreshToken;
         await user.save();
-        res.status(200).json({ message: "welcome",data:accessToken });
+        res.status(200).json({ message: "welcome",data:accessToken ,role:user.isAdmin});
       }
     } else {
       res.json({ message: "incorrect username and password" });
