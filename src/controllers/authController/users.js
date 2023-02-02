@@ -58,7 +58,7 @@ export const login = asyncWrapper(async (req, res) => {
             isAdmin: user.isAdmin},
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
-        );s
+        );
         res.status(200).json({ message: "welcome", data:accessToken });
       } else {
         res.clearCookie("refreshToken");
