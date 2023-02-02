@@ -5,7 +5,7 @@ import Blog from "../models/blogs";
 export const addComment = asyncWrapper(async (req, res) => {
   const blogId = req.params.id;
   if(!blogId)return res.status(404).json({message:'no blog found'});
-  const userId = req.authuser._id;
+  const userId = req.authuser.username;
   const { comment } = req.body;
   if(!comment)return res.status(204).json({message:'comment is empty'});
   const newComment = await Comment.create({

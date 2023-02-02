@@ -25,6 +25,7 @@ export const createUser = asyncWrapper(async (req, res) => {
     const accessToken = JWT.sign(
       { _id: user._id, 
         email: user.email,
+        username:user.userName,
         isAdmin: user.isAdmin},
       process.env.APP_SECRET,
       { expiresIn: "3600s" }
@@ -55,6 +56,7 @@ export const login = asyncWrapper(async (req, res) => {
         const accessToken = JWT.sign(
           { _id: user._id, 
             email: user.email,
+            username:user.userName,
             isAdmin: user.isAdmin},
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
@@ -80,6 +82,7 @@ export const login = asyncWrapper(async (req, res) => {
         const accessToken = JWT.sign(
           { _id: user._id, 
             email: user.email,
+            username:user.userName,
             isAdmin: user.isAdmin },
           process.env.APP_SECRET,
           { expiresIn: "3600s" }

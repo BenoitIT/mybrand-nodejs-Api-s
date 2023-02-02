@@ -4,8 +4,7 @@ blog:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'Blog'},
 user:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'User'
+    type:String,
 },
 comment:{
     type:String,
