@@ -34,7 +34,7 @@ export const findSingleBlog =async (req, res) => {
   try{
   const { id } = req.params;
   const blog = await Blog.findOne({ _id: id })
-    .populate("comments", "comment blog user")
+    .populate("comments", "comment blog user commentingDate")
     .exec();
   if(!blog)return res.status(404).json({message:'message not found'});
   res.success({ data: blog });
