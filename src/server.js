@@ -21,6 +21,12 @@ const app = express();
 const jSend = new JSend({ name: 'mybrand', version: 'X.X.X', release: 'XX' });
 dotenv.config();
 //middlewares
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'authentication');
+  next();
+});
 app.use(cors(corsOpts));
 app.use(docrouter);
 app.use(bodyParser.urlencoded({
