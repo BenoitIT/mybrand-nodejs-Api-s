@@ -29,12 +29,12 @@ export const deleteComment = asyncWrapper(async (req, res) => {
   const activeComment = await Comment.findOne({ _id: commentId }).exec();
   console.log(activeComment);
   const commentor = activeComment.user;
-  if (req.authuser.username === commentor) {
+  // if (req.authuser.username === commentor) {
     await Comment.findByIdAndRemove({ _id: commentId });
     res.status(200).json({message:'comment has beeb deleted'});;
-  } else {
-    res.status(403).json({message:"can't delete this comment"});
-        }
+  // } else {
+  //   res.status(403).json({message:"can't delete this comment"});
+  //       }
 });
 //edit comment
 export const editComment = asyncWrapper(async (req, res) => {
