@@ -18,7 +18,7 @@ export const createBlog = async (req, res) => {
                             data:newBlog});
   } catch (ex) {
     return res.status(400).json({
-      message: "the blog contents already exist",
+      message: "sorry, something went wrong",
     });
   }
 };
