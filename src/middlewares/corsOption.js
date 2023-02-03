@@ -8,5 +8,5 @@ export const corsOpts = {
     'PATCH'
   ],
 
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With','Authentication']
 };
