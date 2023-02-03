@@ -27,8 +27,9 @@ export const deleteComment = asyncWrapper(async (req, res) => {
   const { commentId } = req.params;
   if(!commentId )return res.status(404).json({message:'no comment found'});
   const activeComment = await Comment.findOne({ _id: commentId }).exec();
-  const commentor = activeComment.user.toString();
-  if (req.authuser._id === commentor) {
+  console.log(activeComment);
+  const commentor = activeComment.user;
+  if (req.authuser.username === commentor) {
     await Comment.findByIdAndRemove({ _id: commentId });
     res.status(200).json({message:'comment has beeb deleted'});;
   } else {
@@ -39,9 +40,9 @@ export const deleteComment = asyncWrapper(async (req, res) => {
 export const editComment = asyncWrapper(async (req, res) => {
   const { commentId } = req.params;
   const activeComment = await Comment.findOne({ _id: commentId }).exec();
-  const commentor = activeComment.user.toString();
+  const commentor = activeComment.user;
   // edit post inoccrodance to poster
-  if (req.authuser._id === commentor) {
+  if (req.authuser.username === commentor) {
     activeComment.comment = req.body.comment;
     activeComment.save();
     const message="success";
