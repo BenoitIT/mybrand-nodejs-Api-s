@@ -10,7 +10,7 @@ import {BlogRouter} from "./Routes/blogs.js";
 import {MessageRouter} from "./Routes/messages.js";
 import  { UserRouter} from "./Routes/users.js";
 import { docrouter } from "./documentation/swagger.doc.js";
-import { corsOpts } from "./middlewares/corsOption.js";
+//import { corsOpts } from "./middlewares/corsOption.js";
 import  {
   handleBadRequest,
   handleNotefound,
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'authentication');
   next();
 });
-app.use(cors(corsOpts));
+//app.use(cors(corsOpts));
 app.use(docrouter);
 app.use(bodyParser.urlencoded({
   extended: true
