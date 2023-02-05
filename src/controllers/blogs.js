@@ -52,7 +52,7 @@ export const deleteBlog = async (req, res) => {
   if(!blog){return res.status(404).json({message:'message not found'});
   }
   blog.remove();
-  res.status(204).json({message: 'blog has been deleted'});
+  res.status(200).json({message: 'blog has been deleted'});
 } catch (ex) {
   return res.status(400).json({
     message: "the blog is not exist",

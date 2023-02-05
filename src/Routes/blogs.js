@@ -5,6 +5,7 @@ import {
   addComment,
   deleteComment,
   editComment,
+  getSingleComment
 } from "../controllers/comments";
 export const BlogRouter = express.Router();
 import {
@@ -24,3 +25,4 @@ BlogRouter.patch("/Api/blog/:id", auth,Admin, upload.single("blogImage"),updateB
 BlogRouter.post("/Api/blog/:id/addcomment", auth, addComment);
 BlogRouter.delete("/Api/blog/comments/delete/:commentId", auth, deleteComment);
 BlogRouter.patch("/Api/blog/comments/update/:commentId", auth, editComment);
+BlogRouter.get("/Api/blog/comments/:commentId",auth,getSingleComment);

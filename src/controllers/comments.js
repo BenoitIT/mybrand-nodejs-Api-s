@@ -29,12 +29,17 @@ export const deleteComment = asyncWrapper(async (req, res) => {
   const activeComment = await Comment.findOne({ _id: commentId }).exec();
   console.log(activeComment);
   const commentor = activeComment.user;
-  // if (req.authuser.username === commentor) {
+  if (req.authuser.username === commentor) {
     await Comment.findByIdAndRemove({ _id: commentId });
-    res.status(200).json({message:'comment has beeb deleted'});;
-  // } else {
-  //   res.status(403).json({message:"can't delete this comment"});
-  //       }
+    res.status(200).json({message:'comment has been deleted'});;
+  } else {
+    res.status(403).json({message:"can't delete this comment"});
+        }
+});
+export const getSingleComment=asyncWrapper(async(req,res)=>{
+  const { commentId } = req.params;
+  const comment= await Comment.findOne({_id:commentId}).exec();
+  res.status(200).json({data:comment});;
 });
 //edit comment
 export const editComment = asyncWrapper(async (req, res) => {
@@ -45,10 +50,7 @@ export const editComment = asyncWrapper(async (req, res) => {
   if (req.authuser.username === commentor) {
     activeComment.comment = req.body.comment;
     activeComment.save();
-    const message="success";
-    res.success({
-      message,
-    });
+    res.status(200).json({message:'updated successfully'});
   } else {
       res.status(403).json({message:"can't update this comment"});
   }
