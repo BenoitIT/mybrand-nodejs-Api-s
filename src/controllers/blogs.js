@@ -17,9 +17,10 @@ export const createBlog = async (req, res) => {
     res.status(201).json({ message: "post blogs sent" ,
                             data:newBlog});
   } catch (ex) {
-    return res.status(400).json({
-      message: "sorry, something went wrong",
-    });
+    console.log(ex)
+    // return res.status(500).json({
+    //   message: "sorry, something went wrong",
+    // });
   }
 };
 //display all blogs
