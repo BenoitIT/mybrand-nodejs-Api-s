@@ -3,6 +3,7 @@ import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { uploads } from "../cloudinary/cloudinary";
 
 export const createBlog = async (req, res) => {
+  console.log("DASDADS", req.body)
   try {
     const uploader = async (path) => await uploads(path, "blogImg");
     const actualPath = req.file.path;
@@ -18,8 +19,7 @@ export const createBlog = async (req, res) => {
                             data:newBlog});
   } catch (ex) {
     return res.status(500).json({
-      ////message: "sorry, something went wrong",
-      message:ex
+      message: "sorry, something went wrong" 
     });
   }
 };

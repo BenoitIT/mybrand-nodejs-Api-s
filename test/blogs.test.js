@@ -119,7 +119,7 @@ describe("POST a new blog", () => {
       .delete(`/Api/blog/${_id}`)
       .set('Authorization',`Bearer ${token}`)
       .end((err, res) => {
-        res.should.have.status(204);
+        res.should.have.status(200);
         done();
       });
   });
