@@ -6,8 +6,8 @@ import { asyncWrapper } from "../../middlewares/asyncWrapper";
 //create user function
 export const createUser = asyncWrapper(async (req, res) => {
   const salt = await Bcrypt.genSalt(10);
-  const { userName, email ,password} = req.body;
-  if(!password){
+  const { userName, email, password } = req.body;
+  if (!password) {
     return res.json({ message: `password field is empty` });
   }
   const hashedPassword = await Bcrypt.hash(password, salt);
@@ -17,61 +17,77 @@ export const createUser = asyncWrapper(async (req, res) => {
   if (!email) {
     return res.json({ message: `email field is empty` });
   } else {
-    const currentEmail=await User.findOne({email}).exec()
-     if(!currentEmail){
-    const user = await User.create({
-      userName,
-      email,
-      password: hashedPassword,
-      isAdmin:false
-    });
-    const accessToken = JWT.sign(
-      { _id: user._id, 
-        email: user.email,
-        username:user.userName,
-        isAdmin: user.isAdmin},
-      process.env.APP_SECRET,
-      { expiresIn: "3600s" }
-    );
-    res.status(201).json({message:'account successfully created',
-                          data:accessToken,
-                        role:user.isAdmin});
+    const currentEmail = await User.findOne({ email }).exec();
+    if (!currentEmail) {
+      const user = await User.create({
+        userName,
+        email,
+        password: hashedPassword,
+        isAdmin: false,
+      });
+      const accessToken = JWT.sign(
+        {
+          _id: user._id,
+          email: user.email,
+          username: user.userName,
+          isAdmin: user.isAdmin,
+        },
+        process.env.APP_SECRET,
+        { expiresIn: "3600s" }
+      );
+      res.status(201).json({
+        message: "account successfully created",
+        data: accessToken,
+        username: user.userName,
+        authenticate: true,
+        role: user.isAdmin,
+      });
+    } else {
+      res
+        .status(409)
+        .json({ status: "fail", message: "the user email already exist" });
+    }
   }
-  else{
-    res.status(409).json({status:'fail',message:'the user email already exist'})
-  }
-}
 });
 //login function
 export const login = asyncWrapper(async (req, res) => {
   const cookie = req.headers?.cookie;
   let ActiveRefreshToken;
-    if (cookie) {
-   let cookieValues = cookie.split(";");
-   ActiveRefreshToken = cookieValues
+  if (cookie) {
+    let cookieValues = cookie.split(";");
+    ActiveRefreshToken = cookieValues
       .find((value) => value.startsWith("refreshToken"))
       .substring(13);
   }
-    if (ActiveRefreshToken) {
-      let user = await User.findOne({
-        refreshToken: ActiveRefreshToken,
-      }).exec();
-      if (user) {
-        const accessToken = JWT.sign(
-          { _id: user._id, 
-            email: user.email,
-            username:user.userName,
-            isAdmin: user.isAdmin},
-          process.env.APP_SECRET,
-          { expiresIn: "3600s" }
-        );
-        res.status(200).json({ message: "welcome", data:accessToken ,role:user.isAdmin});
-      } else {
-        res.clearCookie("refreshToken");
-        res.sendStatus(403);
-      }
+  if (ActiveRefreshToken) {
+    let user = await User.findOne({
+      refreshToken: ActiveRefreshToken,
+    }).exec();
+    if (user) {
+      const accessToken = JWT.sign(
+        {
+          _id: user._id,
+          email: user.email,
+          username: user.userName,
+          isAdmin: user.isAdmin,
+        },
+        process.env.APP_SECRET,
+        { expiresIn: "3600s" }
+      );
+      res
+        .status(200)
+        .json({
+          message: "welcome",
+          data: accessToken,
+          role: user.isAdmin,
+          username: user.userName,
+          authenticate: true,
+        });
+    } else {
+      res.clearCookie("refreshToken");
+      res.sendStatus(403);
     }
-   else {
+  } else {
     //in case the user has been logged out
     const email = req.body.email;
     const password = req.body.password;
@@ -84,10 +100,12 @@ export const login = asyncWrapper(async (req, res) => {
       if (checkedpassword) {
         //generate tokens
         const accessToken = JWT.sign(
-          { _id: user._id, 
+          {
+            _id: user._id,
             email: user.email,
-            username:user.userName,
-            isAdmin: user.isAdmin },
+            username: user.userName,
+            isAdmin: user.isAdmin,
+          },
           process.env.APP_SECRET,
           { expiresIn: "3600s" }
         );
@@ -105,7 +123,13 @@ export const login = asyncWrapper(async (req, res) => {
         //store refreshToken in databse
         user.refreshToken = refreshToken;
         await user.save();
-        res.status(200).json({ message: "welcome",data:accessToken ,role:user.isAdmin});
+        res.status(200).json({
+          message: "welcome",
+          data: accessToken,
+          role: user.isAdmin,
+          username: user.userName,
+          authenticate: true,
+        });
       }
     } else {
       res.json({ message: "incorrect username and password" });
